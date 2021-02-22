@@ -20,21 +20,6 @@ class SpiralCalculatorTest extends TestCase
         $this->spiralCalculator = new SpiralCalculator();
     }
 
-    /**
-     * @covers ::getTotalLength
-     *
-     * @dataProvider getTotalLengthProvider
-     */
-    public function testGetTotalLength(
-        int $x,
-        int $y,
-        int $expected
-    ) {
-        $actual = $this->spiralCalculator->getTotalLength($x, $y);
-
-        self::assertSame($expected, $actual);
-    }
-
     public function getTotalLengthProvider(): array
     {
         return [
@@ -47,7 +32,32 @@ class SpiralCalculatorTest extends TestCase
                 'x' => 2,
                 'y' => -2,
                 'expected' => 16,
+            ],
+            'TestCase #3' => [
+                'x' => -2,
+                'y' => -2,
+                'expected' => 20,
+            ],
+            'TestCase #4' => [
+                'x' => 4,
+                'y' => 4,
+                'expected' => 56,
             ]
         ];
+    }
+
+    /**
+     * @covers ::getTotalLength
+     *
+     * @dataProvider getTotalLengthProvider
+     */
+    public function testGetTotalLength(
+        int $x,
+        int $y,
+        int $expected
+    ): void {
+        $actual = $this->spiralCalculator->getTotalLength($x, $y);
+
+        self::assertSame($expected, $actual);
     }
 }

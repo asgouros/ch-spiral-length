@@ -39,16 +39,13 @@ class RunCommand extends Command
      * @throws ConstraintViolationException
      */
     public function __invoke(
-        int $x,
-        int $y,
+        string $x,
+        string $y,
         bool $mem,
         OutputInterface $output,
         BytesUtil $bytesUtil
     ): void {
-        if ($mem) {
-            // Print max. allocated memory
-            $output->writeln($bytesUtil->formatBytes(memory_get_peak_usage()));
-        }
+        $startTime = microtime(true);
 
         foreach ([$x, $y] as $coordinate) {
             if (($coordinate > self::COORDINATE_VALUE_MAX)
@@ -58,6 +55,16 @@ class RunCommand extends Command
             }
         }
 
-        $output->writeln(sprintf('Spiral length: %s', $this->spiralCalculator->getTotalLength($x, $y)));
+        $output->writeln(sprintf('Spiral length for %s, %s: %s',
+            $x,
+            $y,
+            $this->spiralCalculator->getTotalLength($x, $y))
+        );
+
+        if ($mem) {
+            // Print max. allocated memory
+            $output->writeln($bytesUtil->formatBytes(memory_get_peak_usage()));
+            $output->writeln((microtime(true) - $startTime) . 's');
+        }
     }
 }

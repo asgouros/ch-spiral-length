@@ -3,6 +3,7 @@
 namespace cslTests\commands;
 
 use csl\exceptions\ConstraintViolationException;
+use Exception;
 use PHPUnit\Framework\TestCase;
 use csl\commands\RunCommand;
 use csl\services\SpiralCalculator;
@@ -68,7 +69,7 @@ class RunCommandTest extends TestCase
     public function testRunExceptions(
         int $x,
         int $y,
-        \Exception $exception
+        Exception $exception
     ): void {
         $this->expectExceptionObject($exception);
 
@@ -104,7 +105,7 @@ class RunCommandTest extends TestCase
 
         $this->output->expects(self::once())
             ->method('writeln')
-            ->with('Spiral length: ' . $spiralLength);
+            ->with("Spiral length for $x, $y: $spiralLength");
 
         ($this->runCommand)($x, $y, false, $this->output, $this->bytesUtil);
     }

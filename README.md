@@ -6,18 +6,16 @@ This project provides a solution for a **Spiral Length** as described in: [Algor
 
 ### Overview
 
-Application is split into three main logical components: the Command, Models and Services.
+Application is split into two main logical components: the Command and Service.
 
-The Command acts as a "Controller" in MVC terms, is responsible of handling input, controlling the overall flow of 
-execution and producing the desired outcome while consuming / interconnecting Models and Services.
+The Command acts as a "Controller" in MVC terms, is in charge of handling input, controlling the overall flow of 
+execution and producing the desired outcome while consuming / interconnecting Services.
 
-The Models (again similar to MVC "Models"), provide app's structured data and logic.
-
-The Services are dependencies to either the Models or the Command and augment them with any needed re-usable functionality. 
+The Services are dependencies to the Command and augment them with any needed re-usable functionality. 
  
 ### Dependency Injection
 
-Attention has been paid so that project structure facilitates testing, ie. components are generally loosely coupled or at least
+Attention has been paid so that project structure facilitates testing, i.e. components are generally loosely coupled or at least
 their dependencies are defined in a way that they can be injected from "outside".
 
 So, in general PHP-DI with constructor injection and auto-wiring (using type-hints) has been used widely.
@@ -26,28 +24,13 @@ In the case of dependencies against HaversineCalculator service, type-hints have
 so that the app can easily adopt another actual implementation if needed.
 
 The Command component is the single component where it seemed that "partial" Dependency Injection is more adequate 
-ie. Services are injected, Models are controlled directly. This still allowed it to be properly testable.
-
-### Models
-
-Models incorporate most of requirements' logic and are the following: 
-
-
-### Generators
-
-A very crucial point for the project is the ability to handle large data-sets.
-To facilitate this, [Generators](https://www.php.net/manual/en/language.generators.php) have been adopted. 
-Indeed, load testing proved that memory consumption is fixed and limited, regardless of the size of dataset.
+i.e. Services are injected, Models are controlled directly. This still allowed it to be properly testable.
 
 ### Testing
 
 Project is covered comprehensively by unit-tests which cover adequately the most critical and complex parts: 
 - execution flow
 - tools used
-
-## Notable assumptions not otherwise defined
-
- 
 
 ## Getting Started
 
@@ -73,13 +56,24 @@ composer install --no-dev
 2. Next, to run the app:
 
 ```
-php ./csl run [x] [y]
+php ./csl run --mem -- [x] [y]
 ```
 
 * `[x]`: X coordinate value
 * `[y]`: Y coordinate value
 * `--mem` flag: (Optional) Can be used to display max. memory usage by script
 
+Example
+```
+php ./csl run --mem -- 2 -2
+```
+
+Output
+```
+Spiral length for 2, -2: 16
+2.41 MB
+0.00018596649169922s
+```
 
 ## Running the tests
 
