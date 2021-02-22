@@ -48,6 +48,10 @@ class SpiralCalculatorTest extends TestCase
 
     /**
      * @covers ::getTotalLength
+     * @covers ::getNextDirection
+     * @covers ::visitPoint
+     * @covers ::getNextPoint
+     * @covers ::move
      *
      * @dataProvider getTotalLengthProvider
      */

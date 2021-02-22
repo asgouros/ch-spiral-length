@@ -25,7 +25,7 @@ $container = $containerBuilder->build();
 //
 // Instantiate the App
 //
-define('APP_VERSION', 'v0.1.0');
+define('APP_VERSION', 'v1.0.0');
 $app = new Application('Challenge Spiral Length', APP_VERSION);
 
 // Silly will use PHP-DI for dependency injection based on type-hints
