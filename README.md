@@ -51,9 +51,7 @@ composer install --no-dev
 
 ### Running the app
 
-1. The input CSV file should be copied under `[preject's-root]/data/input` 
-
-2. Next, to run the app:
+1. Τo run the app:
 
 ```
 php ./csl run --mem -- [x] [y]
