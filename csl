@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+use csl\commands\RunCommand;
+
+$app = require __DIR__ . '/src/bootstrap.php';
+
+$app->command('run [x] [y] [--mem]', RunCommand::class);
+
+$app->run();

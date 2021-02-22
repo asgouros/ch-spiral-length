@@ -1,0 +1,278 @@
+<?xml version="1.0"?>
+<ruleset name="RideFareEstimator coding standard (based on PSR-2)">
+    <!-- @see https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties -->
+    <description>ChallengeSpiralLength project coding standard.</description>
+
+    <!--
+        Ignore patterns.
+
+        The following two tags are equivalent to the command line
+        argument: ignore=*/tests/*,*/data/*
+    -->
+    <exclude-pattern>*/data/*</exclude-pattern>
+    <exclude-pattern>*/bin/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+
+    <arg name="tab-width" value="4"/>
+
+    <!-- Include the whole PSR-2 standard -->
+    <rule ref="PSR2">
+        <exclude name="Generic.Files.LineLength"/>
+        <exclude name="Generic.Commenting.Todo.TaskFound"/>
+    </rule>
+
+    <!-- We want this to be an error -->
+    <rule ref="PSR2.ControlStructures.ElseIfDeclaration.NotAllowed">
+        <message>Usage of ELSE IF is not allowed; use ELSEIF instead</message>
+        <type>error</type>
+    </rule>
+
+    <!--
+    Generic sniffs
+    -->
+
+    <!-- Checks that the file does not end with a closing tag -->
+    <rule ref="Zend.Files.ClosingTag"/>
+
+    <!-- The soft limit on line length MUST be 120 characters; automated style checkers MUST warn but MUST NOT error at the soft limit. -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="130"/>
+        </properties>
+    </rule>
+
+    <!-- Makes sure that shorthand PHP open tags are not used.-->
+    <rule ref="Generic.PHP.DisallowShortOpenTag"/>
+
+    <!-- Checks the nesting level for methods. -->
+    <rule ref="Generic.Metrics.NestingLevel">
+        <properties>
+            <property name="nestingLevel" value="5"/>
+            <property name="absoluteNestingLevel" value="8"/>
+        </properties>
+    </rule>
+
+    <!-- Cyclomatic complexity for functions by counting the different paths the function includes. -->
+    <rule ref="Generic.Metrics.CyclomaticComplexity">
+        <properties>
+            <property name="complexity" value="15" />
+            <property name="absoluteComplexity" value="30" />
+        </properties>
+    </rule>
+
+    <!-- Some general good things to check. -->
+    <rule ref="Generic.CodeAnalysis">
+        <!-- THis should be excluded, sometimes we are forced to include unused parameters due to eg. Interface declarations-->
+        <exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.Found"/>
+        <!--<exclude name="Generic.Formatting.SpaceAfterNot.Incorrect"/>-->
+    </rule>
+
+    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+
+    <!-- This sniff discourages the use of alias functions that are kept in PHP for compatibility with older versions. -->
+    <rule ref="Generic.PHP.ForbiddenFunctions"/>
+
+    <!-- PHP keywords MUST be in lower case. -->
+    <rule ref="Generic.PHP.LowerCaseKeyword"/>
+
+    <!-- This sniff checks that two strings using the same quoting style are not concatenated.  -->
+    <rule ref="Generic.Strings.UnnecessaryStringConcat">
+        <properties>
+            <property name="allowMultiline" value="true"/>
+        </properties>
+    </rule>
+
+    <rule ref="Generic.Commenting.Todo.CommentFound">
+        <message>Please review this TODO comment: %s</message>
+        <severity>3</severity>
+    </rule>
+
+    <!--
+
+    PEAR Sniffs
+
+    -->
+    <!--
+        Include all sniffs in the PEAR standard. Note that the
+        path to the standard does not have to be specified as the
+        PEAR standard exists inside the PHP_CodeSniffer install
+        directory.
+     -->
+    <rule ref="PEAR">
+        <exclude name="Generic.Commenting"/>
+        <exclude name="PEAR.ControlStructures.MultiLineCondition"/>
+        <exclude name="PEAR.Commenting.FunctionComment"/>
+        <exclude name="PEAR.Commenting.ClassComment"/>
+        <exclude name="PEAR.Commenting.FileComment"/>
+        <exclude name="PEAR.NamingConventions.ValidFunctionName.PrivateNoUnderscore"/>
+        <exclude name="PEAR.NamingConventions.ValidVariableName.PrivateNoUnderscore"/>
+        <exclude name="PEAR.Functions.FunctionDeclaration"/>
+        <exclude name="PEAR.Functions.FunctionCallSignature"/>
+        <exclude name="PEAR.WhiteSpace"/>
+    </rule>
+
+    <!-- This sniff verifies that control structures match a specific pattern of whitespace and bracket placement -->
+    <rule ref="PEAR.ControlStructures.ControlSignature">
+        <properties>
+            <property name="ignoreComments" value="false"/>
+        </properties>
+    </rule>
+
+    <!-- One of the rules that this sniff enforces is the indent of a condition that has been split over multiple lines. -->
+    <rule ref="PEAR.ControlStructures.MultiLineCondition">
+        <!--<exclude name="PEAR.ControlStructures.MultiLineCondition.Alignment" />-->
+        <!--<exclude name="PEAR.ControlStructures.MultiLineCondition.StartWithBoolean" />-->
+        <!--<properties>-->
+        <!--<property name="indent" value="4"/>-->
+        <!--</properties>-->
+    </rule>
+
+    <!-- One of the rules that this sniff enforces is the indent of an assignment that has been split over multiple lines. -->
+    <rule ref="PEAR.Formatting.MultiLineAssignment">
+        <properties>
+            <property name="indent" value="4"/>
+        </properties>
+    </rule>
+
+    <!--
+		Checks the declaration of the class and its' inheritance is correct.
+	-->
+    <rule ref="PEAR.Classes.ClassDeclaration"/>
+
+    <!--
+        Squiz sniffs
+    -->
+
+    <!-- Tests that the file name and the name of the class contained within the file match. -->
+    <rule ref="Squiz.Classes.ClassFileName"/>
+
+    <!-- Ensures classes are in camel caps, and the first letter is capitalised-->
+    <rule ref="Squiz.Classes.ValidClassName"/>
+
+    <!--
+        Warns about code that can never been executed. This happens when a function returns
+        before the code, or a break ends execution of a statement etc.
+    -->
+    <rule ref="Squiz.PHP.NonExecutableCode">
+        <!--It is wanted sometimes to eg. throw Exceptions and break execution -->
+        <exclude name="Squiz.PHP.NonExecutableCode.Unreachable"/>
+    </rule>
+
+    <!--
+		Checks for usage of "$this" in static methods, which will cause runtime errors.
+	-->
+    <rule ref="Squiz.Scope.StaticThisUsage"/>
+
+    <!--This sniff generates warnings for commented out code.
+        By default, a warning is generated if a comment appears to be more than 35% valid code.-->
+    <!--<rule ref="Squiz.PHP.CommentedOutCode">-->
+    <!--<severity>4</severity>-->
+    <!--</rule>-->
+
+    <!--One of the rules this sniff enforces is the padding around concatenation operators. -->
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <properties>
+            <property name="spacing" value="1"/>
+            <property name="ignoreNewlines" value="true"/>
+        </properties>
+    </rule>
+
+    <rule ref="Squiz.Classes.SelfMemberReference"/>
+    <rule ref="Squiz.Classes.ClassFileName"/>
+    <rule ref="Squiz.Classes.ValidClassName"/>
+
+    <rule ref="Squiz.Commenting">
+        <exclude name="Squiz.Commenting.BlockComment.NoCapital"/>
+        <exclude name="Squiz.Commenting.BlockComment.LastLineIndent"/>
+        <exclude name="Squiz.Commenting.BlockComment.LineIndent"/>
+        <exclude name="Squiz.Commenting.BlockComment.NoEmptyLineAfter"/>
+        <exclude name="Squiz.Commenting.BlockComment.NoEmptyLineBefore"/>
+        <exclude name="Squiz.Commenting.BlockComment.FirstLineIndent"/>
+        <exclude name="Squiz.Commenting.BlockComment.WrongStart"/>
+        <exclude name="Squiz.Commenting.ClassComment.TagNotAllowed"/>
+        <exclude name="Squiz.Commenting.ClosingDeclarationComment.Missing"/>
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamComment"/>
+        <exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop"/>
+        <exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType"/>
+        <exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamName"/>
+        <exclude name="Squiz.Commenting.FunctionComment.ScalarTypeHintMissing"/>
+        <exclude name="Squiz.Commenting.FunctionComment.SpaceAfterParamName"/>
+        <exclude name="Squiz.Commenting.FunctionComment.IncorrectParamVarName"/>
+        <exclude name="Squiz.Commenting.FunctionComment.InvalidReturn"/>
+        <exclude name="Squiz.Commenting.FunctionComment.MissingReturn"/>
+        <exclude name="Squiz.Commenting.FunctionComment.IncorrectTypeHint"/>
+        <exclude name="Squiz.Commenting.FunctionComment.EmptyThrows"/>
+        <exclude name="Squiz.Commenting.FunctionComment.ThrowsNoFullStop"/>
+        <exclude name="Squiz.Commenting.FunctionCommentThrowTag.WrongNumber"/>
+        <exclude name="Squiz.Commenting.FileComment"/>
+        <exclude name="Squiz.Commenting.InlineComment.DocBlock"/>
+        <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar"/>
+        <exclude name="Squiz.Commenting.InlineComment.SpacingBefore"/>
+        <exclude name="Squiz.Commenting.LongConditionClosingComment.Missing"/>
+        <exclude name="Squiz.Commenting.PostStatementComment.Found"/>
+        <exclude name="Squiz.Commenting.VariableComment.TagNotAllowed"/>
+    </rule>
+
+    <rule ref="Squiz.Commenting.FunctionComment.TypeHintMissing">
+        <severity>3</severity>
+    </rule>
+
+    <rule ref="Squiz.PHP.DiscouragedFunctions"/>
+    <rule ref="Squiz.PHP.Eval"/>
+    <rule ref="Squiz.PHP.DiscouragedFunctions"/>
+    <rule ref="Squiz.PHP.GlobalKeyword"/>
+    <rule ref="Squiz.PHP.InnerFunctions"/>
+
+    <rule ref="Squiz.Scope.MethodScope"/>
+    <rule ref="Squiz.Scope.StaticThisUsage"/>
+    <rule ref="Squiz.Scope.MemberVarScope"/>
+    <rule ref="Squiz.Scope.MethodScope"/>
+    <rule ref="Squiz.Strings.EchoedStrings"/>
+
+    <rule ref="Squiz.NamingConventions.ValidVariableName">
+        <exclude name="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore"/>
+        <exclude name="Squiz.NamingConventions.ValidVariableName.PublicHasUnderscore"/>
+        <type>warning</type>
+    </rule>
+
+    <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
+
+    <!--
+        Some of the rules this sniff enforces are that there should not be whitespace at the end of a line,
+       and that functions should not contain multiple blank lines in a row.-->
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+        <properties>
+            <property name="ignoreBlankLines" value="true"/>
+        </properties>
+    </rule>
+
+    <!--
+        Include sniffs by Magento:
+            - Mysql4 not used anymore in Class names of Resource models
+            - Magento classes are not to be instantiated directly
+            - usage of count on collection creates unnecessary database traffic - use getSize() instead
+            - usage of fetchAll on collection can cause serious memory issues
+            - getFirstItem() does not limit the result of collection load to one item
+            - checks loops for performance limiting behaviors like "load" or count calculations
+            - `goto` discouraged
+            - usage of class variables based on var keyword discouraged
+            - extension of forbidden functions
+            - remote file inclusion, backticks and exits discouraged
+            - usage of superglobals discouraged
+            - direct output (print, echo), ged
+            - direct usage of MySQL queries discouraged
+            - usage of slow query options (like union, group by) displayed
+            - warning of time consuming regular expression usage
+            - usage of + operator to concatenate two strings discouraged
+            - check if the === operator is used for testing the return value of the strpos PHP function
+    -->
+    <rule ref="./vendor/magento-ecg/coding-standard/EcgM2/ruleset.xml">
+        <exclude name="EcgM2.Plugins.Plugin"/>
+        <exclude name="Ecg.Sql.RawQuery.RawSql"/>
+        <exclude name="Ecg.Sql.SlowQuery.SlowRawSql"/>
+        <exclude name="Ecg.Performance.Loop.ModelLSD"/>
+        <exclude name="Ecg.Security.IncludeFile.IncludeFileDetected"/>
+        <exclude name="Ecg.Security.IncludeFile.IncludeFileDetected"/>
+    </rule>
+</ruleset>

@@ -1,0 +1,53 @@
+# grumphp.yml
+parameters:
+    bin_dir: "./vendor/bin"
+    git_dir: "."
+    hooks_dir: "./bin/git-hooks"
+    hooks_preset: local
+    stop_on_failure: false
+    ignore_unstaged_changes: false
+    hide_circumvention_tip: true
+    process_async_limit: 10
+    process_async_wait: 1000
+    process_timeout: 60
+    ascii:
+        failed: grumphp-grumpy.txt
+        succeeded: grumphp-happy.txt
+    tasks:
+        phpcs:
+          standard: cs-ruleset.xml
+          show_warnings: true
+        phpparser:
+          ignore_patterns: []
+          kind: php7
+          visitors: {}
+          triggered_by: [php]
+        phplint:
+          exclude: []
+          jobs: ~
+          triggered_by: ['php', 'phtml', 'php3', 'php4', 'php5']
+        phpunit:
+          config_file: ~
+          testsuite: ~
+          group: []
+          always_execute: false
+        phpstan:
+          autoload_file: ~
+          configuration: ~
+          level: 1
+          force_patterns: []
+          ignore_patterns: [tests/]
+          triggered_by: ['php']
+        phpmnd:
+          directory: .
+          exclude: []
+          exclude_name: []
+          exclude_path: []
+          extensions: []
+          hint: false
+          ignore_numbers: []
+          ignore_strings: []
+          strings: false
+          triggered_by: ['php', 'phtml']
+    testsuites: []
+    extensions: []

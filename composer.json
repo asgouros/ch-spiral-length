@@ -1,0 +1,41 @@
+{
+    "name": "asgouros/csl",
+    "description": "Challenge Spiral Length",
+    "type": "project",
+    "authors": [
+        {
+            "name": "asgouros",
+            "email": "andreassgouros@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-xml": "*",
+        "php": ">=7.4",
+        "mnapoli/silly": "^1.7",
+        "php-di/php-di": "^6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "@stable",
+        "phpunit/php-code-coverage": "@stable",
+        "roave/security-advisories": "dev-master",
+        "magento-ecg/coding-standard": "2.*",
+        "phpstan/phpstan": "@stable",
+        "phpmd/phpmd": "@stable",
+        "povils/phpmnd": "@stable",
+        "phpro/grumphp": "@stable",
+        "squizlabs/php_codesniffer": "@stable"
+    },
+    "autoload": {
+        "psr-4": {
+            "csl\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "cslTests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "tests": "php ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml --colors=\"never\"  ./tests"
+    }
+}
